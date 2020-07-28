@@ -1,0 +1,22 @@
+{
+  "$id": "associatedFAQs",
+  "$schema": "https://schema.yext.com/config/km/field/v1",
+  "displayName": "Associated FAQs",
+  "apiName": "c_associatedFAQs",
+  "description": "",
+  "typeId": "yext/list",
+  "type": {
+    "listType": {
+      "typeId": "yext/entityReference",
+      "type": {
+        "entityReferenceType": {
+          "supportedEntityTypeIds": [
+            "yext/faq"
+          ]
+        }
+      }
+    }
+  },
+  "localization": "PRIMARY_ONLY",
+  "group": "NONE"
+}

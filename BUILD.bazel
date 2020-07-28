@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("//tools/go:def.bzl", "go_deployable")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "yext/m4/confcode/cmd/sud",
+    visibility = ["//visibility:private"],
+    deps = ["//gocode/src/yext/m4/confcode/cmd/sud/cmd:go_default_library"],
+)
+
+go_deployable(
+    name = "sud",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)

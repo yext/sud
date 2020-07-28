@@ -1,0 +1,19 @@
+{
+  "$id": "c_benefits",
+  "$schema": "https://schema.yext.com/config/km/field/v1",
+  "displayName": "Benefits",
+  "description": "",
+  "typeId": "yext/list",
+  "type": {
+    "listType": {
+      "typeId": "yext/string",
+      "type": {
+        "stringType": {
+          "stereotype": "SIMPLE"
+        }
+      }
+    }
+  },
+  "localization": "PRIMARY_ONLY",
+  "group": "NONE"
+}

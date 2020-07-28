@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "add.go",
+        "move.go",
+        "remove.go",
+        "rename.go",
+        "replace.go",
+        "root.go",
+    ],
+    importpath = "yext/m4/confcode/cmd/sud/cmd",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//gocode/src/yext/m4/confcode/cmd/sud/filesystem:go_default_library",
+        "//gocode/src/yext/m4/confcode/cmd/sud/github:go_default_library",
+        "@com_github_spf13_afero//:go_default_library",
+        "@com_github_spf13_cobra//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["acceptance_test.go"],
+    data = glob(["testdata/**"]),
+    embed = [":go_default_library"],
+    deps = [
+        "@com_github_spf13_afero//:go_default_library",
+        "@com_github_stretchr_testify//assert:go_default_library",
+    ],
+)
