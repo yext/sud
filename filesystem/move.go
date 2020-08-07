@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
-	"yext/m4/confcode/cmd/sud/json"
+	"github.com/yext/sud/json"
 )
 
 // Move moves the fileName to the value in the given directories.

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/afero"
-	"yext/m4/confcode/cmd/sud/json"
+	"github.com/yext/sud/json"
 )
 
 // Replace replaces the fileName with the value in the given directories.

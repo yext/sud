@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"yext/m4/confcode/cmd/sud/cmd"
+	"github.com/yext/sud/cmd"
 )
 
 func main() {

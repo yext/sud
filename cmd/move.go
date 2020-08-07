@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
-	"yext/m4/confcode/cmd/sud/filesystem"
-	"yext/m4/confcode/cmd/sud/github"
+	"github.com/yext/sud/filesystem"
+	"github.com/yext/sud/github"
 )
 
 // moveCmd represents the move command
