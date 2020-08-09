@@ -38,3 +38,37 @@ jobs:
 
     - name: Test
       run: go test -v .
+      
+  release-osx:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Release
+      run: make build-release
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+    
+    - name: Set SHA
+      id: shasum
+      run: |
+        echo ::set-output name=sha::"$(shasum -a 256 ./target/sud-mac.tar.gz | awk '{printf $1}')"
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/sud-mac.tar.gz
+        asset_name: sud-mac.tar.gz
+        asset_content_type: application/gzip
