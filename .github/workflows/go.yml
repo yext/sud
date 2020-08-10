@@ -44,7 +44,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Release
-      run: make build-release
+      uses: cedrickring/golang-action/go1.13@1.5.1
+      with:
+        args: go build -o sud .
     - name: Get version
       id: get_version
       run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
