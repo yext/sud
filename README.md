@@ -1,6 +1,6 @@
 # sud
 ![Tests](https://github.com/yext/sud/workflows/Test/badge.svg)
-[![Actions Status](https://xxx.execute-api.us-west-2.amazonaws.com/production/badge/saurabhaditya/sud)](https://xxx.execute-api.us-west-2.amazonaws.com/production/results/saurabhaditya/sud)
+
 
 sud OR solution updater updates solutions by running the command on the file in the given repositories.
 
