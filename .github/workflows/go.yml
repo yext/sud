@@ -43,18 +43,18 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: olegtarasov/get-tag@v2
+      id: tagName
+    - run: mkdir sud_${{ steps.tagName.outputs.tag }}
     - name: Build Release
-      uses: cedrickring/golang-action/go1.13@1.5.1
-      with:
-        args: go build -o sud .
+      run: |
+        go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
+        SHA=$(sha256sum sud_${{ steps.tagName.outputs.tag }}/sud | cut -d' ' -f1)
+        mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud-${SHA}
     - name: Get version
       id: get_version
       run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
     
-    - name: Set SHA
-      id: shasum
-      run: |
-        echo ::set-output name=sha::"$(shasum -a 256 ./target/sud-mac.tar.gz | awk '{printf $1}')"
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -71,6 +71,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/sud-mac.tar.gz
-        asset_name: sud-mac.tar.gz
-        asset_content_type: application/gzip
+        asset_path: sud_${{ steps.tagName.outputs.tag }}/sud-${SHA}
+        asset_name: sud-${SHA}
+        asset_content_type: application/binary
