@@ -32,7 +32,7 @@ Flags:
 Use "sud [command] --help" for more information about a command.
 
 
-## Rename command
+## `sud rename` command
 
 sud rename --help
 Renames a file, or a path in a file, in the given repositories:
@@ -66,6 +66,64 @@ Usage:
 
 Flags:
   -h, --help           help for rename
+  -p, --path string    The path to the json pointer in the file as per https://tools.ietf.org/html/rfc6901
+  -v, --value string   The desired value
+
+Global Flags:
+      --push   Whether to push the repo to github
+
+## `sud move` command
+
+Moves a file, or a path in a file, in the given repositories :
+
+Moves the given file in all the given repositories, if the file is present.
+Moves within a file if the path flag is provided.
+
+Examples:
+
+Moving a File:
+
+`sud move km/entity-type/atm.json
+  --value km/entity-type-extension/atm.json
+  ~/repos/ans150-front-end-overview
+  ~/repos/kg*`
+
+will move km/entity-type/atm.json to km/entity-type-extension/atm.json in the ans150-front-end-overview repo as well as any kg* repos.
+
+Moving within a File:
+
+`sud move
+  --path /a/b/c
+  --value /a/d
+  ~/repos/ans150-front-end-overview`
+
+will move the JSON element specified by the JSON pointer /a/b/c to /a/d in the provided directories:
+
+{
+  "a": {
+    "b": {
+	  ...
+	  c: {...}
+	}
+  }
+}
+
+becomes:
+
+{
+  "a": {
+	"b": {
+	  ...
+	},
+	"d:" {...}
+  }
+}
+
+Usage:
+  sud move FILE_PATH DIRs... [flags]
+
+Flags:
+  -h, --help           help for move
   -p, --path string    The path to the json pointer in the file as per https://tools.ietf.org/html/rfc6901
   -v, --value string   The desired value
 
