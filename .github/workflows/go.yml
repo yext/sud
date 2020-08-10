@@ -49,7 +49,14 @@ jobs:
     - name: Build Release
       run: |
         go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
-        SHA=$(sha256sum sud_${{ steps.tagName.outputs.tag }}/sud | cut -d' ' -f1)
+    - name: Set SHA
+      id: shasum
+      run: |
+        echo ::set-output name=sha::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')"      
+    - name: Build Release
+      run: |
+        go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
+        SHA=$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')
         mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud-${SHA}
     - name: Get version
       id: get_version
@@ -74,3 +81,12 @@ jobs:
         asset_path: sud_${{ steps.tagName.outputs.tag }}/sud-${SHA}
         asset_name: sud-${SHA}
         asset_content_type: application/binary
+    - name: Bump Brew
+      env: 
+        HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.BREW_TOKEN }}
+      run: |
+        brew tap yext/tap
+        brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
+        --sha256=${{ steps.shasum.outputs.sha }} \
+        --url="https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud" \
+        yext/tap/sud
