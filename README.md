@@ -129,3 +129,148 @@ Flags:
 
 Global Flags:
       --push   Whether to push the repo to github
+
+## `sud add` command
+
+Adds a file, or a path in a file, in the given repositories :
+
+ - Adds the given file in all the given repositories. It adds only if the file is not already present.
+ - Adds within a file if the path flag is provided.
+
+The value provided should conform to the intended type.
+For example,
+ 1. to add a number would be --value=304
+ 2. to add string would be --value=\"my-string\" (escape the quote in bash)
+ 3. to add an array would be --value="[1, 2]"
+
+Instead of providing a value you can also provide a file path of a file that has the desired value.
+
+Examples:
+
+Adding a File:
+
+`sud add foo.json
+  --file bar.json
+  ~/repos/ans150-front-end-overview`
+
+will add a file foo.json with the contents of the provided bar.json to ~/repos/ans150-front-end-overview.
+
+Adding a Path:
+
+`sud add dependencies.json
+  --path /productFeatureIds/-
+  --values 304,305
+  ~/repos/ans150-front-end-overview`
+
+will add product features 304 and 305 to ~repos/ans150-front-end-overview/dependencies.json:
+
+{ "productFeatureIds": [1, 2] } => { "productFeatureIds": [1, 2, 304, 305] }
+
+Usage:
+  sud add FILE_PATH DIRs... [flags]
+
+Flags:
+  -f, --file string      The file with the desired value
+  -h, --help             help for add
+  -p, --path string      The path to the json pointer in the file as per https://tools.ietf.org/html/rfc6901
+  -v, --value string     The desired value
+  -l, --values strings   The desired list of values
+
+Global Flags:
+      --push   Whether to push the repo to github
+      
+## `sud remove` command
+
+Removes a file, or a path in a file, in the given repositories :
+
+Removes the given file in all the given repositories, if the file is present.
+Removes within a file if the path flag is provided.
+If value is provided along with the path, then removes only the provided value, if present at the path. (Currently, only removing a number from an array is supported.)
+
+Examples:
+
+Remove a File:
+
+`sud remove dependencies.json
+  ~/repos/ans150-front-end-overview
+  ~/repos/kg*`
+
+Removes dependencies.json from all of the specified directories.
+
+Removing a Value in a File:
+
+`sud remove dependencies.json
+  --path /productFeatureIds
+  --value 304
+  ~/repos/ans150-front-end-overview
+  ~/repos/kg*`
+
+will remove product feature 304 from dependencies.json in all the specified directories:
+
+{ "productFeatureIds": [1, 2, 304] } => { "productFeatureIds": [1 ,2] }
+
+Usage:
+  sud remove FILE_PATH DIRs... [flags]
+
+Flags:
+  -f, --file string      The file with the desired value
+  -h, --help             help for remove
+  -p, --path string      The path to the json pointer in the file as per https://tools.ietf.org/html/rfc6901
+  -v, --value string     The desired value
+  -l, --values strings   The desired list of values
+
+Global Flags:
+      --push   Whether to push the repo to github
+      
+## `sud replace` command
+
+Replaces a file, or a path in a file, in the given repositories :
+
+ - Replaces the given file in all the given repositories. It does nothing if the file is not present.
+ - Replaces within a file if the path flag is provided.
+
+The value provided should conform to the intended type.
+For example,
+ 1. to replace a number would be --value=304
+ 2. to replace string would be --value=\"my-string\" (escape the quote in bash)
+ 3. to replace an array would be --value="[1, 2]"
+
+Instead of providing a value you can also provide a file path of a file that has the desired value.
+
+Examples:
+
+Replacing a File:
+
+`sud replace pages/page-builder/template/page.json
+  --file new-page.json
+  ~/repos/pgs*`
+
+will replace pages/page-builder/template/page.json with the contents of new-page.json in all ~/repos/pgs* directories.
+
+Replacing a Path:
+
+`sud replace km/*/hotel.json
+  --path "/\$id"
+  --value "\"my_hotel\""
+  ~/repos/kg122-intro-to-fields`
+
+will replace the value at path /$id with "my_hotel" in ~/repos/kg122-intro-to-fields/km/entity-type-extension/hotel.json
+
+`sud replace km/*/hotel.json
+  --path /enabled
+  --value true
+  ~/repos/kg122-intro-to-fields`
+
+will replace the value at path /enabled with true in ~/repos/kg122-intro-to-fields/km/entity-type-extension/hotel.json
+
+Usage:
+  sud replace FILE_PATH DIRs... [flags]
+
+Flags:
+  -f, --file string    The file with the desired value
+  -h, --help           help for replace
+  -p, --path string    The path to the json pointer in the file as per https://tools.ietf.org/html/rfc6901
+  -v, --value string   The desired value
+
+Global Flags:
+      --push   Whether to push the repo to github
