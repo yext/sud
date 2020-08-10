@@ -1,4 +1,6 @@
 # sud
+![Tests](https://github.com/yext/sud/workflows/Test/badge.svg)
+
 sud OR solution updater updates solutions by running the command on the file in the given repositories.
 
 Repositories are space separated list of directories or github repository urls.
