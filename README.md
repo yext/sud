@@ -33,8 +33,13 @@ Flags:
 
 Use "sud [command] --help" for more information about a command.
 
+## Table of Contents
+* [Commands](#commands)
+* [Installation](#installation)  
+* [Updating](#updating)
 
-## `sud rename` command
+## Commands
+### `sud rename` command
 
 sud rename --help
 Renames a file, or a path in a file, in the given repositories:
@@ -74,7 +79,7 @@ Flags:
 Global Flags:
       --push   Whether to push the repo to github
 
-## `sud move` command
+### `sud move` command
 
 Moves a file, or a path in a file, in the given repositories :
 
@@ -132,7 +137,7 @@ Flags:
 Global Flags:
       --push   Whether to push the repo to github
 
-## `sud add` command
+### `sud add` command
 
 Adds a file, or a path in a file, in the given repositories :
 
@@ -181,7 +186,7 @@ Flags:
 Global Flags:
       --push   Whether to push the repo to github
       
-## `sud remove` command
+### `sud remove` command
 
 Removes a file, or a path in a file, in the given repositories :
 
@@ -224,7 +229,7 @@ Flags:
 Global Flags:
       --push   Whether to push the repo to github
       
-## `sud replace` command
+### `sud replace` command
 
 Replaces a file, or a path in a file, in the given repositories :
 
@@ -276,3 +281,17 @@ Flags:
 
 Global Flags:
       --push   Whether to push the repo to github
+
+## Installation
+
+Sud requires Mac OS and Go 1.7 or higher.
+
+    brew install yext/tap/sud
+    go get github.com/yext/sud
+
+## Updating
+
+To update an existing install to the latest version of Sud, run:
+
+    brew upgrade yext/tap/sud
+    go get -u github.com/yext/sud
