@@ -1,9 +1,11 @@
 name: 'Release'
 on:
-  create:
+  
+  create:    
     tags:
       - v*
-    branch: master
+    branches:
+      - master
 jobs:
   release-osx:
     runs-on: macos-latest
