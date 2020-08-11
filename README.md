@@ -227,7 +227,7 @@ sud remove dependencies.json \
   --path /productFeatureIds \
   --value 304 \
   ~/repos/ans150-front-end-overview \
-  ~/repos/kg*`
+  ~/repos/kg*
 ```
 will remove product feature 304 from dependencies.json in all the specified directories:
 
