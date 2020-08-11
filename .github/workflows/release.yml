@@ -3,6 +3,7 @@ on:
   create:
     tags:
       - v*
+    branch: master
 jobs:
   release-osx:
     runs-on: macos-latest
