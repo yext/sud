@@ -13,7 +13,7 @@ A repository can be one of the following:
 
 For example:
 
-`sud replace default/km/*.json 
+```sud replace default/km/*.json 
 
   --value "\"yext/atm\"" 
   
@@ -21,7 +21,7 @@ For example:
   
   https://github.com/YextHHChallenges/asb* 
   
-  --push`
+  --push```
 
 will make the change in the matching files in all the matching repositories and push to github.
 
