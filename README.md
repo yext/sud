@@ -23,6 +23,8 @@ sud replace default/km/*.json \
 
 will make the change in the matching files in all the matching repositories and push to github.
 
+Note: To avoid bash expansions, please quote the arguments. To consider bash expansions, please keep the arguments with wildcards unquoted.
+
 Usage:
   sud [command]
 
