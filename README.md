@@ -21,7 +21,8 @@ For example:
   
   https://github.com/YextHHChallenges/asb* 
   
-  --push```
+  --push
+```
 
 will make the change in the matching files in all the matching repositories and push to github.
 
