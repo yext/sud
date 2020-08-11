@@ -16,7 +16,7 @@ For example:
 ```bash
 sud replace default/km/*.json \
   --value "\"yext/atm\"" \
-  --path /primaryEntityType \ 
+  --path /primaryEntityType \
   https://github.com/YextHHChallenges/asb* \
   --push
 ```
