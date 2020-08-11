@@ -63,17 +63,18 @@ Renaming a File:
 ```bash
 sud rename dependencies.json \
   --value foo.json \
-  ~/repos/ans*`
+  ~/repos/ans*
 ```
 will rename dependencies.json to foo.json in all ~/repos/ans* directories.
 
 Renaming a Path:
 
-`sud rename km/*/*.json
-  --path /apiName
-  --value "\$id"
-  ~/repos/ans*`
-
+```bash
+sud rename km/*/*.json \
+  --path /apiName \
+  --value "\$id" \
+  ~/repos/ans*
+```
 will replace "apiName" with "$id" in km/*/*.json files in all ~/repos/ans* directories:
 
 { "apiName": "123" } => { "$id": "123" }
@@ -101,20 +102,21 @@ Examples:
 Moving a File:
 
 ```bash
-sud move km/entity-type/atm.json
-  --value km/entity-type-extension/atm.json
-  ~/repos/ans150-front-end-overview
-  ~/repos/kg*`
-
+sud move km/entity-type/atm.json \
+  --value km/entity-type-extension/atm.json \
+  ~/repos/ans150-front-end-overview \
+  ~/repos/kg*
+```
 will move km/entity-type/atm.json to km/entity-type-extension/atm.json in the ans150-front-end-overview repo as well as any kg* repos.
 
 Moving within a File:
 
-`sud move
-  --path /a/b/c
-  --value /a/d
-  ~/repos/ans150-front-end-overview`
-
+```bash
+sud move \
+  --path /a/b/c \
+  --value /a/d \
+  ~/repos/ans150-front-end-overview
+```
 will move the JSON element specified by the JSON pointer /a/b/c to /a/d in the provided directories:
 
 {
@@ -167,19 +169,21 @@ Examples:
 
 Adding a File:
 
-`sud add foo.json
-  --file bar.json
-  ~/repos/ans150-front-end-overview`
-
+```bash
+sud add foo.json \
+  --file bar.json \
+  ~/repos/ans150-front-end-overview
+```
 will add a file foo.json with the contents of the provided bar.json to ~/repos/ans150-front-end-overview.
 
 Adding a Path:
 
-`sud add dependencies.json
-  --path /productFeatureIds/-
-  --values 304,305
-  ~/repos/ans150-front-end-overview`
-
+```bash
+sud add dependencies.json \
+  --path /productFeatureIds/- \
+  --values 304,305 \
+  ~/repos/ans150-front-end-overview
+```
 will add product features 304 and 305 to ~repos/ans150-front-end-overview/dependencies.json:
 
 { "productFeatureIds": [1, 2] } => { "productFeatureIds": [1, 2, 304, 305] }
@@ -209,20 +213,22 @@ Examples:
 
 Remove a File:
 
-`sud remove dependencies.json
-  ~/repos/ans150-front-end-overview
-  ~/repos/kg*`
-
+```bash
+sud remove dependencies.json \
+  ~/repos/ans150-front-end-overview \
+  ~/repos/kg*
+```
 Removes dependencies.json from all of the specified directories.
 
 Removing a Value in a File:
 
-`sud remove dependencies.json
-  --path /productFeatureIds
-  --value 304
-  ~/repos/ans150-front-end-overview
+```bash
+sud remove dependencies.json \
+  --path /productFeatureIds \
+  --value 304 \
+  ~/repos/ans150-front-end-overview \
   ~/repos/kg*`
-
+```
 will remove product feature 304 from dependencies.json in all the specified directories:
 
 { "productFeatureIds": [1, 2, 304] } => { "productFeatureIds": [1 ,2] }
@@ -259,25 +265,31 @@ Examples:
 
 Replacing a File:
 
-`sud replace pages/page-builder/template/page.json
-  --file new-page.json
-  ~/repos/pgs*`
+```bash
+sud replace pages/page-builder/template/page.json \
+  --file new-page.json \
+  ~/repos/pgs*
+```
 
 will replace pages/page-builder/template/page.json with the contents of new-page.json in all ~/repos/pgs* directories.
 
 Replacing a Path:
 
-`sud replace km/*/hotel.json
-  --path "/\$id"
-  --value "\"my_hotel\""
-  ~/repos/kg122-intro-to-fields`
+```bash
+sud replace km/*/hotel.json \
+  --path "/\$id" \
+  --value "\"my_hotel\"" \
+  ~/repos/kg122-intro-to-fields
+```
 
 will replace the value at path /$id with "my_hotel" in ~/repos/kg122-intro-to-fields/km/entity-type-extension/hotel.json
 
-`sud replace km/*/hotel.json
-  --path /enabled
-  --value true
-  ~/repos/kg122-intro-to-fields`
+```bash
+sud replace km/*/hotel.json \
+  --path /enabled \
+  --value true \
+  ~/repos/kg122-intro-to-fields
+```
 
 will replace the value at path /enabled with true in ~/repos/kg122-intro-to-fields/km/entity-type-extension/hotel.json
 
