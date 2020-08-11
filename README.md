@@ -13,13 +13,13 @@ A repository can be one of the following:
 
 For example:
 
-```bash
-sud replace default/km/*.json \
-  --value "\"yext/atm\"" \
-  --path /primaryEntityType \
-  https://github.com/YextHHChallenges/asb* \
-  --push
-```
+	```bash
+	sud replace default/km/*.json \
+	  --value "\"yext/atm\"" \
+	  --path /primaryEntityType \
+	  https://github.com/YextHHChallenges/asb* \
+	  --push
+	```
 
 will make the change in the matching files in all the matching repositories and push to github.
 
@@ -60,10 +60,11 @@ Examples:
 
 Renaming a File:
 
-`sud rename dependencies.json
-  --value foo.json
+```bash
+sud rename dependencies.json \
+  --value foo.json \
   ~/repos/ans*`
-
+```
 will rename dependencies.json to foo.json in all ~/repos/ans* directories.
 
 Renaming a Path:
@@ -99,7 +100,8 @@ Examples:
 
 Moving a File:
 
-`sud move km/entity-type/atm.json
+```bash
+sud move km/entity-type/atm.json
   --value km/entity-type-extension/atm.json
   ~/repos/ans150-front-end-overview
   ~/repos/kg*`
