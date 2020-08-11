@@ -13,7 +13,8 @@ A repository can be one of the following:
 
 For example:
 
-```sud replace default/km/*.json 
+```bash
+sud replace default/km/*.json 
 
   --value "\"yext/atm\"" 
   
