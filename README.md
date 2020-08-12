@@ -8,7 +8,7 @@
 
 sud OR solution updater updates solutions by running the command on the file in the given repositories.
 
-Repositories are space separated list of directories or github repository urls.
+Repositories are space separated list of directories or github repository URLs.
 
 A repository can be one of the following:
  1. A directory on your file system such as ~/repos/my-solution-dir

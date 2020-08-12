@@ -22,6 +22,8 @@ For example:
 sud replace default/km/*.json --value "\"yext/atm\"" --path /primaryEntityType https://github.com/YextHHChallenges/asb* --push
 
 will make the change in the matching files in all the matching repositories and push to github.
+
+Note: Please consider using quotes around wildcard * to avoid bash expansion, and skip the quotes for bash expansion.
 `,
 }
 
