@@ -18,10 +18,8 @@ jobs:
       id: shasum
       run: |
         echo ::set-output name=sha::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')"      
-    - name: Build Release
+    - name: Move
       run: |
-        go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
-        SHA=$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')
         mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud-${{ steps.shasum.outputs.sha }}
     - name: Get version
       id: get_version
