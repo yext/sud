@@ -45,7 +45,7 @@ jobs:
         asset_name: sud-${{ steps.shasum.outputs.sha }}
         asset_content_type: application/binary
     - name: Bump Brew
-      uses: mislav/bump-homebrew-formula-action
+      uses: mislav/bump-homebrew-formula-action@v1
       env: 
         COMMITTER_TOKEN: ${{ secrets.BREW_TOKEN }}
       with:
