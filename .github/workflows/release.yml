@@ -45,11 +45,10 @@ jobs:
         asset_name: sud-${{ steps.shasum.outputs.sha }}
         asset_content_type: application/binary
     - name: Bump Brew
+      uses: mislav/bump-homebrew-formula-action
       env: 
-        HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.BREW_TOKEN }}
-      run: |
-        brew tap yext/tap
-        brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
-        --sha256=${{ steps.shasum.outputs.sha }} \
-        --url="https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha }}" \
-        yext/tap/sud
+        COMMITTER_TOKEN: ${{ secrets.BREW_TOKEN }}
+      with:
+        formula-name: sud
+        homebrew-tap: yext/homebrew-tap
+        downloadUrl: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha }}
