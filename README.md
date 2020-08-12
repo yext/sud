@@ -1,8 +1,9 @@
 # sud
-![Tests](https://github.com/yext/sud/workflows/Test/badge.svg)
-[![CI][s0]][l0]
+![Test](https://github.com/yext/sud/workflows/Test/badge.svg)
+[![Release][s0]][l0]
 
-[l0]: https://github.com/extrawurst/gitui/actions
+[s0]: https://github.com/yext/sud/workflows/Release/badge.svg
+[l0]: https://https://github.com/yext/sud/actions
 
 
 sud OR solution updater updates solutions by running the command on the file in the given repositories.
