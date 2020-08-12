@@ -51,4 +51,4 @@ jobs:
       with:
         formula-name: sud
         homebrew-tap: yext/homebrew-tap
-        downloadUrl: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha }}
+        download-url: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha }}
