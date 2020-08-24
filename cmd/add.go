@@ -22,7 +22,7 @@ For example,
  2. to add string would be --value=\"my-string\" (escape the quote in bash)
  3. to add an array would be --value="[1, 2]"
 
-Instead of providing a value you can also provide a file path of a file that has the desired value.
+Instead of providing a value, you can also provide a file path of a file that has the desired value.
 
 Examples:
 
