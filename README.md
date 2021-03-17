@@ -21,7 +21,7 @@ For example:
 sud replace default/km/*.json \
   --value "\"yext/atm\"" \
   --path /primaryEntityType \
-  https://github.com/YextHHChallenges/asb* \
+  "https://github.com/YextHHChallenges/asb*" \
   --push
 ```
 
