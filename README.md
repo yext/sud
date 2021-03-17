@@ -3,7 +3,7 @@
 [![Release][s0]][l0]
 
 [s0]: https://github.com/yext/sud/workflows/Release/badge.svg
-[l0]: https://https://github.com/yext/sud/actions
+[l0]: https://github.com/yext/sud/actions
 
 
 sud OR solution updater updates solutions by running the command on the file in the given repositories.
