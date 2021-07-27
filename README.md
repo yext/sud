@@ -47,9 +47,14 @@ Flags:
 Use "sud [command] --help" for more information about a command.
 
 ## Table of Contents
+* [Access](#access)
 * [Commands](#commands)
 * [Installation](#installation)  
 * [Updating](#updating)
+
+## Access
+Please make sure you have access to push to the repositories you are trying to update using Sud.
+To update Github repos in specific orgs, you may need to create a personal token that has permissions to push to the repos: https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
 ## Commands
 ### `sud rename` command
