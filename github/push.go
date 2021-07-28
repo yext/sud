@@ -37,6 +37,13 @@ func Push(dirs []string) error {
 			continue
 		}
 
+                cmd = exec.Command("sh", "-c", "git add .")
+                cmd.Dir = convertTilde(dir, home)
+                err = cmd.Run()
+                if err != nil {
+                        continue
+                }
+
 		cmd = exec.Command("sh", "-c", "git commit -am'sud: updating the repo'")
 		cmd.Dir = convertTilde(dir, home)
 		err = cmd.Run()
