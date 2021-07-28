@@ -3,8 +3,8 @@ package github
 import (
 	"context"
 	"fmt"
+	"github.com/gobwas/glob"
 	"github.com/google/go-github/github"
-	"github.com/minio/minio/pkg/wildcard"
 	"golang.org/x/oauth2"
 	"os"
 	"path"
@@ -29,13 +29,14 @@ func expand(repoUrlPattern string) ([]string, error) {
 
 // Matches the pattern to repository names in the given org.
 func match(org string, pattern string) ([]string, error) {
+	g := glob.MustCompile(pattern)
 	var matchedRepos []string
 	repos, err := list(org)
 	if err != nil {
 		return nil, err
 	}
 	for _, r := range repos {
-		if wildcard.Match(pattern, r) {
+		if g.Match(r) {
 			matchedRepos = append(matchedRepos, r)
 		}
 	}
