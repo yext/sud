@@ -1,0 +1,34 @@
+# This workflow will check if the NOTICE file needs to be updated
+
+name: Check License File
+
+on: [push, pull_request]
+
+jobs:
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jonabc/setup-licensed@v1
+        with:
+          version: '3.1.0'
+      - name: Generate license cache
+        run: licensed cache -c .github/workflows/check-license-file/.licensed.yml
+      - name: Generate notices
+        run: licensed notices -c .github/workflows/check-license-file/.licensed.yml && cp .licenses/NOTICE ./THIRD-PARTY-NOTICES
+      - name: Clean up license cache
+        run: rm -rf .licenses
+      - name: Git status
+        run: git status
+      - name: Git diff
+        run: git diff
+      - name: Check for changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.11
+      - name: Update THIRD-PARTY-NOTICES
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: 'Automated update to THIRD-PARTY-NOTICES'
+          add: 'THIRD-PARTY-NOTICES'
+          push: true
+          default_author: github_actions
