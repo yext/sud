@@ -47,11 +47,25 @@ Flags:
 Use "sud [command] --help" for more information about a command.
 
 ## Table of Contents
+
+* [Installation](#installation)  
 * [Access](#access)
 * [Commands](#commands)
-* [Installation](#installation)  
 * [Updating](#updating)
 
+## Installation
+
+Sud requires Mac OS or Go 1.7 or higher.
+
+    brew install yext/tap/sud
+    go get github.com/yext/sud
+
+## Updating
+
+To update an existing install to the latest version of Sud, run:
+
+    brew upgrade yext/tap/sud
+    go get -u github.com/yext/sud
 ## Access
 Please make sure you have access to push to the repositories you are trying to update using Sud.
 To update Github repos in specific orgs, you may need to create a personal token that has permissions to push to the repos: https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token
@@ -242,6 +256,16 @@ will remove product feature 304 from dependencies.json in all the specified dire
 
 { "productFeatureIds": [1, 2, 304] } => { "productFeatureIds": [1 ,2] }
 
+
+Removing fields from entities:
+
+```bash
+sud remove default/km/entity/*.json \
+  --path /content/facebookParentPageId \
+  ~/repos/kg*
+```
+will remove the given field from all the entities in the matched directories.
+
 Usage:
   sud remove FILE_PATH DIRs... [flags]
 
@@ -314,16 +338,3 @@ Flags:
 Global Flags:
       --push   Whether to push the repo to github
 
-## Installation
-
-Sud requires Mac OS and Go 1.7 or higher.
-
-    brew install yext/tap/sud
-    go get github.com/yext/sud
-
-## Updating
-
-To update an existing install to the latest version of Sud, run:
-
-    brew upgrade yext/tap/sud
-    go get -u github.com/yext/sud
