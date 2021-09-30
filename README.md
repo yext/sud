@@ -48,19 +48,19 @@ Use "sud [command] --help" for more information about a command.
 
 ## Table of Contents
 
-* [Installation](#installation)  
+* [Install](#install)  
+* [Update](#update)
 * [Access](#access)
-* [Commands](#commands)
-* [Updating](#updating)
+* [Run](#run)
 
-## Installation
+## Install
 
 Sud requires Mac OS or Go 1.7 or higher.
 
     brew install yext/tap/sud
     go get github.com/yext/sud
 
-## Updating
+## Update
 
 To update an existing install to the latest version of Sud, run:
 
@@ -70,7 +70,7 @@ To update an existing install to the latest version of Sud, run:
 Please make sure you have access to push to the repositories you are trying to update using Sud.
 To update Github repos in specific orgs, you may need to create a personal token that has permissions to push to the repos: https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
-## Commands
+## Run
 ### `sud rename` command
 
 sud rename --help
