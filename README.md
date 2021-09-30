@@ -12,8 +12,8 @@ Repositories are space separated list of directories or github repository URLs.
 
 A repository can be one of the following:
  1. A directory on your file system such as ~/repos/my-solution-dir
- 2. A url to github repository such as https://github.com/YextHHChallenges/asbTest
- 3. A wildcard such as https://github.com/YextHHChallenges/asbTest* that will be expanded to matched repositories
+ 2. A url to github repository such as https://github.com/MyOrgIsHere/asbTest
+ 3. A wildcard such as https://github.com/MyOrgIsHere/asbTest* that will be expanded to matched repositories
 
 For example:
 
@@ -21,7 +21,7 @@ For example:
 sud replace default/km/*.json \
   --value "\"yext/atm\"" \
   --path /primaryEntityType \
-  "https://github.com/YextHHChallenges/asb*" \
+  "https://github.com/MyOrgIsHere/asb*" \
   --push
 ```
 
