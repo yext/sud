@@ -47,7 +47,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_osx }}
-        asset_name: sud-osx-${{ steps.shasum.outputs.sha_osx }}
+        asset_name: sud-${{ steps.shasum.outputs.sha_osx }}
         asset_content_type: application/binary
     - name: Upload Release Asset Windows
       uses: actions/upload-release-asset@v1
@@ -56,7 +56,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_windows }}.exe
-        asset_name: sud-windows-${{ steps.shasum.outputs.sha_windows }}.exe
+        asset_name: sud.exe
         asset_content_type: application/binary
     - name: Bump Brew
       uses: mislav/bump-homebrew-formula-action@v1
@@ -65,4 +65,4 @@ jobs:
       with:
         formula-name: sud
         homebrew-tap: yext/homebrew-tap
-        download-url: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-osx-${{ steps.shasum.outputs.sha_osx }}
+        download-url: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha_osx }}
