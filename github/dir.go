@@ -3,11 +3,12 @@ package github
 import (
 	"fmt"
 	"log"
-	"os/exec"
 	"os/user"
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/spf13/afero"
 )
 
 // Clones the repos that are github.
@@ -64,8 +65,7 @@ func CloneToDirs(repos []string) ([]string, error) {
 }
 
 func clear(dir string) error {
-	cmd := exec.Command("sh", "-c", fmt.Sprintf("rm -rf %q", dir))
-	err := cmd.Run()
+	err := afero.NewOsFs().RemoveAll(dir)
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func dirForRepoUrl(repoUrl string, sudDir string) (string, error) {
 		}
 		dir = filepath.Join(dir, s)
 	}
-	err := Clone(repoUrl, filepath.Dir(dir))
+	err := Clone(repoUrl, dir)
 	if err != nil {
 		return "", err
 	}

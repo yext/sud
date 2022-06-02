@@ -1,14 +1,16 @@
 package github
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
-	"os/user"
+
 	"path/filepath"
 	"strings"
+
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 var (
@@ -18,45 +20,56 @@ var (
 
 // Pushes the given directories using git push.
 func Push(dirs []string) error {
-	usr, _ := user.Current()
-	home := usr.HomeDir
 	for _, dir := range dirs {
-		cmd := exec.Command("sh", "-c", "git diff --quiet")
-		cmd.Dir = convertTilde(dir, home)
-		err := cmd.Run()
-		if errors.As(err, &ee) {
-			fmt.Println("There are changes in " + dir + ", pushing to github.") // ran, but non-zero exit code
-		} else if errors.As(err, &pe) {
-			log.Printf("os.PathError: %v", pe) // "no such file ...", "permission denied" etc.
-			continue
-		} else if err != nil {
+		repo, err := git.PlainOpen(dir)
+		worktree, err := repo.Worktree()
+		status, err := worktree.Status()
+
+		if err != nil {
 			log.Printf("general error: %v", err) // something really bad happened!
 			continue
+		} else if !status.IsClean() {
+			fmt.Println("There are changes in " + dir + ", pushing to github.") // ran, but non-zero exit code
 		} else {
 			fmt.Println("No changes found. Nothing to push.") // ran without error (exit code zero)
 			continue
 		}
 
-                cmd = exec.Command("sh", "-c", "git add .")
-                cmd.Dir = convertTilde(dir, home)
-                err = cmd.Run()
-                if err != nil {
-                        continue
-                }
-
-		cmd = exec.Command("sh", "-c", "git commit -am'sud: updating the repo'")
-		cmd.Dir = convertTilde(dir, home)
-		err = cmd.Run()
+		err = worktree.AddGlob(".")
 		if err != nil {
 			continue
 		}
 
-		cmd = exec.Command("sh", "-c", "git push")
-		cmd.Dir = convertTilde(dir, home)
-		err = cmd.Run()
+		commitOpt := git.CommitOptions{
+			All: true,
+		}
+		_, err = worktree.Commit("sud: updating the repo", &commitOpt)
 		if err != nil {
+			fmt.Println("Failed to commit " + dir)
+			fmt.Println(err)
 			continue
 		}
+
+		accessToken, err := getAccessToken()
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		pushOpt := git.PushOptions{
+			Auth: &http.BasicAuth{
+				Username: "name",
+				Password: accessToken,
+			},
+		}
+		err = repo.Push(&pushOpt)
+		if err != nil {
+			fmt.Println("Failed to push " + dir)
+			fmt.Println(err)
+			continue
+		}
+
 		fmt.Println("Pushed to github.")
 	}
 	return nil

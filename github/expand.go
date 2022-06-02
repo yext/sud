@@ -2,13 +2,12 @@ package github
 
 import (
 	"context"
-	"fmt"
+	"path"
+	"strings"
+
 	"github.com/gobwas/glob"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
-	"os"
-	"path"
-	"strings"
 )
 
 // Expands a given repo url pattern with wildcard to the matching repository urls.
@@ -47,11 +46,9 @@ func match(org string, pattern string) ([]string, error) {
 func list(org string) ([]string, error) {
 	var rs []string
 	ctx := context.Background()
-	const GithubAccessToken = "GITHUB_ACCESS_TOKEN"
-	accessToken, found := os.LookupEnv(GithubAccessToken)
-	if !found {
-		return nil, fmt.Errorf("please set the env var " + GithubAccessToken +
-			" to the value of access token generated from https://github.com/settings/tokens")
+	accessToken, err := getAccessToken()
+	if err != nil {
+		return nil, err
 	}
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: accessToken},
