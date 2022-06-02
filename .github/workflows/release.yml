@@ -4,23 +4,28 @@ on:
     tags:
       - v*
 jobs:
-  release-osx:
+  release-sud:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
     - run: mkdir sud_${{ steps.tagName.outputs.tag }}
-    - name: Build Release
+    - name: Build MacOS Release
       run: |
         go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
+    - name: Build Windows Release
+      run: |
+        GOOS=windows GOARCH=amd64 go build -o sud_${{ steps.tagName.outputs.tag }}/sud.exe .
     - name: Set SHA
       id: shasum
       run: |
-        echo ::set-output name=sha::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')"      
+        echo ::set-output name=sha_osx::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')";
+        echo ::set-output name=sha_windows::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud.exe | awk '{printf $1}')"
     - name: Move
       run: |
-        mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud-${{ steps.shasum.outputs.sha }}
+        mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_osx }};
+        mv sud_${{ steps.tagName.outputs.tag }}/sud.exe sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_windows }}.exe
     - name: Get version
       id: get_version
       run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
@@ -35,14 +40,23 @@ jobs:
         release_name: ${{ github.ref }}
         draft: false
         prerelease: false
-    - name: Upload Release Asset
+    - name: Upload Release Asset OSX
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: sud_${{ steps.tagName.outputs.tag }}/sud-${{ steps.shasum.outputs.sha }}
-        asset_name: sud-${{ steps.shasum.outputs.sha }}
+        asset_path: sud_${{ steps.tagName.outputs.tag }}/sud-${{ steps.shasum.outputs.sha_osx }}
+        asset_name: sud-osx-${{ steps.shasum.outputs.sha }}
+        asset_content_type: application/binary
+    - name: Upload Release Asset Windows
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: sud_${{ steps.tagName.outputs.tag }}/sud-${{ steps.shasum.outputs.sha_windows }}.exe
+        asset_name: sud-windows-${{ steps.shasum.outputs.sha }}.exe
         asset_content_type: application/binary
     - name: Bump Brew
       uses: mislav/bump-homebrew-formula-action@v1
@@ -51,4 +65,4 @@ jobs:
       with:
         formula-name: sud
         homebrew-tap: yext/homebrew-tap
-        download-url: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha }}
+        download-url: https://github.com/yext/sud/releases/download/${{ steps.get_version.outputs.version }}/sud-${{ steps.shasum.outputs.sha_osx }}
