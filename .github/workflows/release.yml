@@ -10,22 +10,34 @@ jobs:
     - uses: actions/checkout@v2
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
-    - run: mkdir sud_${{ steps.tagName.outputs.tag }}
+    - env:
+        TAG_NAME: ${{ steps.tagName.outputs.tag }}
+      run: mkdir sud_"$TAG_NAME"
     - name: Build MacOS Release
+      env:
+        TAG_NAME: ${{ steps.tagName.outputs.tag }}
       run: |
-        go build -o sud_${{ steps.tagName.outputs.tag }}/sud .
+        go build -o sud_"$TAG_NAME"/sud .
     - name: Build Windows Release
+      env:
+        TAG_NAME: ${{ steps.tagName.outputs.tag }}
       run: |
-        GOOS=windows GOARCH=amd64 go build -o sud_${{ steps.tagName.outputs.tag }}/sud.exe .
+        GOOS=windows GOARCH=amd64 go build -o sud_"$TAG_NAME"/sud.exe .
     - name: Set SHA
       id: shasum
+      env:
+        TAG_NAME: ${{ steps.tagName.outputs.tag }}
       run: |
-        echo ::set-output name=sha_osx::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud | awk '{printf $1}')";
-        echo ::set-output name=sha_windows::"$(shasum -a 256 sud_${{ steps.tagName.outputs.tag }}/sud.exe | awk '{printf $1}')"
+        echo ::set-output name=sha_osx::"$(shasum -a 256 sud_$TAG_NAME/sud | awk '{printf $1}')";
+        echo ::set-output name=sha_windows::"$(shasum -a 256 sud_$TAG_NAME/sud.exe | awk '{printf $1}')"
     - name: Move
+      env:
+        TAG_NAME: ${{ steps.tagName.outputs.tag }}
+        SHA_SUM_OSX: ${{ steps.shasum.outputs.sha_osx }}
+        SHA_SUM_WINDOWS: ${{ steps.shasum.outputs.sha_windows }}
       run: |
-        mv sud_${{ steps.tagName.outputs.tag }}/sud sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_osx }};
-        mv sud_${{ steps.tagName.outputs.tag }}/sud.exe sud_${{ steps.tagName.outputs.tag }}/sud${{ steps.shasum.outputs.sha_windows }}.exe
+        mv sud_"$TAG_NAME"/sud sud_"$TAG_NAME"/sud"$SHA_SUM_OSX";
+        mv sud_"$TAG_NAME"/sud.exe sud_"$TAG_NAME"/sud"$SHA_SUM_WINDOWS".exe
     - name: Get version
       id: get_version
       run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
